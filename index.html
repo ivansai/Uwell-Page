@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uwell — Ваш лікар у телефоні. Завжди поруч.</title>
+  <meta name="description" content="Не разовий аналіз — система здоров'я. Лікар, AI-асистент і чекапи в одному додатку. Перші 3&nbsp;дні безкоштовно." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --c-primary:       #00939D;
+  --c-primary-h:     #007A83;
+  --c-primary-lt:    #ECFDF7;
+  --c-green:         #00A376;
+  --c-badge-border:  #D1FAEC;
+
+  --c-dark:   #101828;
+  --c-body:   #344054;
+  --c-muted:  #667085;
+
+  --c-white:  #FFFFFF;
+  --c-gray50: #F5F9F9;
+  --c-gray100:#F2F4F7;
+  --c-border: #E4E7EC;
+  --c-borderl:#F2F4F7;
+
+  --container: 1272px;
+  --px: 32px;
+  --section-py: 100px;
+
+  --r-doctor: 24px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 100px;
+
+  --sh-sm: 0 1px 3px rgba(16,24,40,.10),0 1px 2px rgba(16,24,40,.06);
+  --sh-md: 0 4px 8px rgba(16,24,40,.12),0 2px 4px rgba(16,24,40,.08);
+  --sh-teal: 0 4px 14px rgba(0,147,157,.28);
+
+  --font:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display:'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);color:var(--c-body);background:var(--c-white);
+     line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+button{font-family:var(--font);cursor:pointer}
+
+/* ─── CONTAINER ─── */
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--px)}
+
+/* ─── HELPERS ─── */
+.text-teal{color:var(--c-primary)}
+.link-teal{color:var(--c-primary);font-weight:600;border-bottom:1px solid currentColor;
+           transition:opacity .15s}
+.link-teal:hover{opacity:.72}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0 24px;
+     height:48px;
+     border-radius:var(--r-md);font-family:var(--font);font-size:15px;
+     font-weight:600;line-height:1;white-space:nowrap;border:1.5px solid transparent;
+     cursor:pointer;transition:background .18s,border-color .18s,color .18s,
+     transform .15s,box-shadow .18s;text-decoration:none}
+.btn--primary{background:var(--c-primary);border-color:var(--c-primary);color:#fff}
+.btn--primary:hover{background:var(--c-primary-h);border-color:var(--c-primary-h);
+                    transform:translateY(-1px);box-shadow:var(--sh-teal)}
+.btn--outline{background:transparent;border-color:var(--c-primary);color:var(--c-primary)}
+.btn--outline:hover{background:var(--c-primary-lt)}
+.btn--sm{height:40px;padding:0 18px;font-size:14px}
+.btn--block{width:100%;justify-content:center}
+
+/* ─── STORE BADGES ─── */
+.store-link{display:inline-flex;align-items:center;transition:opacity .15s,transform .15s}
+.store-link:hover{opacity:.82;transform:translateY(-2px)}
+.store-link img{height:48px;width:auto;display:block}
+
+/* ─── SECTION ─── */
+.section{padding-block:var(--section-py);background:var(--c-white)}
+.section--gray{background:var(--c-gray50)}
+
+.section__label{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font);font-size:16px;font-weight:600;
+  line-height:1.5;letter-spacing:0;
+  color:var(--c-primary);text-transform:uppercase;
+  margin-bottom:16px
+}
+.label-diamond{font-size:8px;line-height:1}
+
+.section__title{font-family:var(--font-display);font-size:48px;font-weight:700;
+                line-height:1.25;letter-spacing:-.02em;
+                color:var(--c-dark);margin-bottom:20px}
+.section__subtitle{font-family:var(--font);font-size:16px;font-weight:400;
+                   color:var(--c-muted);line-height:1.5;
+                   max-width:600px;margin-bottom:56px}
+
+/* ─── DOTS ─── */
+.carousel-dots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px}
+.dot{width:8px;height:8px;border-radius:var(--r-pill);background:var(--c-border);
+     transition:background .2s,width .2s}
+.dot--active{background:var(--c-primary);width:24px}
+
+/* ════════════════════════════════════════
+   HEADER
+════════════════════════════════════════ */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);
+             backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+             border-bottom:1px solid var(--c-borderl)}
+.nav{display:flex;align-items:center;height:72px;gap:40px}
+.nav__logo{flex-shrink:0}
+.nav__links{display:flex;align-items:center;gap:32px;flex:1;justify-content:center}
+.nav__links a{font-size:15px;font-weight:500;color:var(--c-body);transition:color .15s}
+.nav__links a:hover{color:var(--c-primary)}
+.nav__actions{display:flex;align-items:center;gap:16px;flex-shrink:0}
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+.hero{padding-block:80px 100px;background:var(--c-white);overflow:hidden}
+.hero__inner{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:80px
+}
+
+.hero__badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;
+             background:var(--c-primary-lt);border:1px solid var(--c-badge-border);
+             border-radius:var(--r-pill);font-size:13px;font-weight:500;
+             color:var(--c-green);margin-bottom:32px;width:fit-content}
+.hero__badge-dot{width:8px;height:8px;background:var(--c-green);border-radius:50%;flex-shrink:0}
+
+.hero__title{
+  font-family:var(--font-display);font-size:64px;font-weight:700;
+  line-height:1.25;letter-spacing:-.025em;
+  color:var(--c-dark);margin-bottom:24px
+}
+.hero__title-l1{display:block;white-space:nowrap}
+
+.hero__subtitle{
+  font-family:var(--font);font-size:16px;font-weight:400;
+  color:var(--c-muted);line-height:1.5;
+  max-width:480px;margin-bottom:32px
+}
+
+.hero__cta-wrap{margin-bottom:16px}
+.hero__store-row{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+
+.hero__trust{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:14px;
+            font-weight:500;color:var(--c-muted)}
+.trust-check{color:var(--c-primary);font-size:13px}
+
+.hero__visual{
+  display:flex;align-items:center;justify-content:flex-end;
+  position:relative;
+  margin-right:calc(-1 * var(--px))
+}
+.hero__mockup{
+  width:100%;max-width:100%;height:auto;
+  filter:drop-shadow(0 24px 64px rgba(0,147,157,.12))
+}
+
+/* ════════════════════════════════════════
+   HOW IT WORKS
+════════════════════════════════════════ */
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px}
+.feature-card{background:var(--c-white);border:1px solid var(--c-border);
+              border-radius:var(--r-lg);padding:28px 24px;
+              transition:box-shadow .2s,transform .2s}
+.feature-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.feature-card__header{display:flex;align-items:flex-start;justify-content:space-between;
+                       margin-bottom:20px}
+.feature-card__num{font-size:13px;font-weight:700;color:var(--c-border);
+                   letter-spacing:.03em;line-height:1;padding-top:4px}
+.feature-card__title{font-size:17px;font-weight:600;color:var(--c-dark);
+                      line-height:1.3;margin-bottom:8px}
+.feature-card__text{font-size:14px;color:var(--c-muted);line-height:1.65}
+
+.features__pricing-bar{display:flex;align-items:center;justify-content:space-between;
+                        gap:32px;padding:24px 32px;background:var(--c-white);
+                        border:1px solid var(--c-border);border-radius:var(--r-lg)}
+.features__pricing-text{font-size:15px;color:var(--c-body);line-height:1.6}
+.features__pricing-text strong{color:var(--c-dark)}
+.features__pricing-text .pricing-note{display:block;margin-top:4px}
+
+/* ════════════════════════════════════════
+   DOCTORS
+════════════════════════════════════════ */
+.doctors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+#doctors .section__subtitle{max-width:none;white-space:nowrap}
+
+.doctor-card{
+  background:var(--c-white);
+  border:1px solid var(--c-border);
+  border-radius:var(--r-doctor);
+  overflow:hidden;
+  transition:box-shadow .2s,transform .2s
+}
+.doctor-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+
+.doctor-card__photo{
+  width:100%;aspect-ratio:1/1;overflow:hidden;
+  background:var(--c-gray100);
+  border-radius:var(--r-doctor) var(--r-doctor) 0 0
+}
+.doctor-card__photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  transition:transform .4s
+}
+.doctor-card:hover .doctor-card__photo img{transform:scale(1.04)}
+.doctor-card__info{padding:16px 20px 20px}
+.doctor-card__name{font-size:16px;font-weight:600;color:var(--c-dark);
+                   margin-bottom:4px;line-height:1.3}
+.doctor-card__specialty{font-size:14px;color:var(--c-muted);margin-bottom:4px}
+.doctor-card__exp{font-size:13px;font-weight:500;color:var(--c-primary)}
+
+/* ════════════════════════════════════════
+   REVIEWS
+════════════════════════════════════════ */
+.reviews__rating{display:flex;align-items:center;gap:8px;margin-bottom:48px}
+.rating__stars{color:#F79009;font-size:20px;letter-spacing:3px;line-height:1}
+.rating__score{font-size:18px;font-weight:700;color:var(--c-dark);line-height:1}
+.rating__count{font-size:15px;color:var(--c-muted)}
+
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.review-card{background:var(--c-white);border:1px solid var(--c-border);
+             border-radius:var(--r-lg);padding:32px 28px;
+             display:flex;flex-direction:column}
+.review-card__quote{margin-bottom:20px;opacity:.5;flex-shrink:0}
+.review-card__text{font-family:var(--font);font-size:16px;font-weight:400;
+                   color:var(--c-body);line-height:1.5;
+                   flex:1;margin-bottom:24px}
+.review-card__author{display:flex;align-items:center;gap:12px;margin-top:auto}
+.review-card__avatar{width:40px;height:40px;border-radius:50%;
+                     object-fit:cover;flex-shrink:0}
+.review-card__author > div{flex:1;min-width:0}
+.review-card__name-row{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  line-height:1.2;margin-bottom:2px
+}
+.review-card__name{font-family:var(--font);font-size:16px;font-weight:600;
+                   color:var(--c-dark);line-height:1}
+.review-card__stars{color:#F79009;font-size:13px;letter-spacing:1px;line-height:1;
+                    flex-shrink:0}
+.review-card__location{font-family:var(--font);font-size:14px;font-weight:400;
+                       color:var(--c-muted)}
+
+/* ════════════════════════════════════════
+   PRICING
+════════════════════════════════════════ */
+.pricing__header{text-align:center}
+.pricing__header .section__label{justify-content:center}
+.pricing__header .section__subtitle{margin-inline:auto;text-align:center}
+.pricing__app-note{display:block;font-size:14px;color:var(--c-muted);margin-top:6px}
+
+.pricing__toggle{display:flex;align-items:center;gap:4px;padding:4px;
+                 background:var(--c-gray100);border-radius:var(--r-md);
+                 width:fit-content;margin:0 auto 48px}
+.toggle-btn{display:flex;align-items:center;gap:8px;padding:9px 20px;
+            border-radius:var(--r-sm);border:none;background:transparent;
+            font-size:14px;font-weight:500;color:var(--c-muted);
+            white-space:nowrap;
+            transition:background .18s,color .18s,box-shadow .18s}
+.toggle-btn--active{background:var(--c-white);color:var(--c-dark);font-weight:600;
+                    box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.discount-badge{background:var(--c-primary);color:#fff;font-size:11px;font-weight:700;
+                padding:2px 8px;border-radius:var(--r-pill);line-height:1.6}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.pricing-card{background:var(--c-white);border:1.5px solid var(--c-border);
+              border-radius:var(--r-xl);padding:32px 28px;position:relative;
+              display:flex;flex-direction:column;
+              transition:box-shadow .2s}
+.pricing-card:hover{box-shadow:var(--sh-md)}
+.pricing-card--popular{border-color:var(--c-primary);
+                        box-shadow:0 0 0 1px var(--c-primary)}
+.pricing-card--popular:hover{box-shadow:0 0 0 1px var(--c-primary),var(--sh-md)}
+
+.pricing-card__popular-badge{position:absolute;top:-14px;left:50%;
+                              transform:translateX(-50%);
+                              background:var(--c-primary);color:#fff;
+                              font-size:12px;font-weight:600;
+                              padding:4px 18px;border-radius:var(--r-pill);
+                              white-space:nowrap;letter-spacing:.01em}
+.pricing-card__name{font-size:20px;font-weight:700;color:var(--c-dark);
+                    margin-bottom:6px;line-height:1.2}
+.pricing-card__desc{font-size:14px;color:var(--c-muted);
+                    margin-bottom:24px;line-height:1.4}
+.pricing-card__price{margin-bottom:28px}
+
+.price-primary{display:block;font-size:48px;font-weight:800;color:var(--c-dark);
+               line-height:1;letter-spacing:-.03em;margin-bottom:6px}
+.price-unit{font-size:22px;font-weight:500;color:var(--c-muted);letter-spacing:0}
+.price-secondary{font-size:13px;color:var(--c-muted);line-height:1.4}
+
+.pricing-card__features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1}
+.pricing-card__features li{position:relative;padding-left:20px;font-size:14px;
+                             color:var(--c-body);line-height:1.5}
+.pricing-card__features li::before{content:"✓";position:absolute;left:0;
+                                    color:var(--c-primary);font-weight:700;font-size:13px}
+
+/* ════════════════════════════════════════
+   FAQ
+════════════════════════════════════════ */
+.faq-list{border:1px solid var(--c-border);border-radius:var(--r-lg);
+          overflow:hidden;background:var(--c-white)}
+.faq-item{border-bottom:1px solid var(--c-border)}
+.faq-item:last-child{border-bottom:none}
+
+.faq-item__trigger{width:100%;display:flex;align-items:center;
+                   justify-content:space-between;gap:24px;
+                   padding:20px 28px;background:transparent;border:none;
+                   font-size:16px;font-weight:500;color:var(--c-dark);
+                   text-align:left;cursor:pointer;transition:background .15s;
+                   line-height:1.5}
+.faq-item__trigger:hover{background:var(--c-gray50)}
+
+.faq-item__icon{font-size:22px;font-weight:300;color:var(--c-primary);
+                flex-shrink:0;line-height:1;width:22px;text-align:center;
+                transition:transform .2s}
+.faq-item--open .faq-item__icon{transform:rotate(45deg)}
+
+.faq-item__body{overflow:hidden;animation:faqIn .25s ease forwards}
+.faq-item__body[hidden]{display:none}
+@keyframes faqIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.faq-item__body p{padding:0 28px 20px;font-size:15px;color:var(--c-muted);line-height:1.75}
+
+/* ════════════════════════════════════════
+   FINAL CTA
+════════════════════════════════════════ */
+.cta-final{background:var(--c-primary);padding-block:100px}
+.cta-final__inner{text-align:center;max-width:640px;margin-inline:auto}
+.cta-final__social-proof{display:inline-flex;align-items:center;gap:8px;
+                          font-size:14px;font-weight:500;
+                          color:rgba(255,255,255,.75);margin-bottom:20px}
+.cta-final__social-proof::before{content:"★★★★★";color:#F9C74F;
+                                  letter-spacing:2px;font-size:13px}
+.cta-final__title{font-family:var(--font-display);font-size:56px;font-weight:800;
+                  color:#fff;line-height:1.1;
+                  letter-spacing:-.025em;margin-bottom:16px}
+.cta-final__subtitle{font-size:16px;color:rgba(255,255,255,.72);
+                     margin-bottom:40px;line-height:1.5}
+.cta-final__stores{display:flex;align-items:center;justify-content:center;
+                   gap:16px;flex-wrap:wrap}
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+.site-footer{background:var(--c-white);border-top:1px solid var(--c-borderl);
+             padding-block:28px}
+.footer__inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.footer__copy{font-size:13px;color:var(--c-muted);line-height:1.5}
+
+/* ════════════════════════════════════════
+   HAMBURGER
+════════════════════════════════════════ */
+.nav__burger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:44px;height:44px;padding:10px;
+  background:none;border:none;cursor:pointer;
+  flex-shrink:0;margin-left:auto;border-radius:var(--r-sm)
+}
+.nav__burger:hover{background:var(--c-gray100)}
+.nav__burger span{
+  display:block;width:22px;height:2px;
+  background:var(--c-dark);border-radius:2px;
+  transition:transform .25s ease,opacity .25s ease,background .15s
+}
+.nav__burger--open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__burger--open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav__burger--open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ════════════════════════════════════════
+   MOBILE DRAWER
+════════════════════════════════════════ */
+.nav__drawer{
+  display:none;position:fixed;
+  top:72px;left:0;right:0;bottom:0;
+  background:var(--c-white);z-index:99;
+  flex-direction:column;overflow-y:auto;
+  border-top:1px solid var(--c-borderl)
+}
+.nav__drawer.is-open{display:flex}
+.nav__drawer__links{
+  display:flex;flex-direction:column;
+  padding:8px var(--px) 0
+}
+.nav__drawer__links a{
+  font-size:17px;font-weight:500;color:var(--c-dark);
+  padding:16px 0;border-bottom:1px solid var(--c-borderl);
+  display:block;transition:color .15s
+}
+.nav__drawer__links a:last-child{border-bottom:none}
+.nav__drawer__links a:active{color:var(--c-primary)}
+.nav__drawer__cta{padding:24px var(--px) 40px}
+.nav__drawer__cta .btn{width:100%;justify-content:center;height:52px;font-size:16px}
+
+body.menu-open{overflow:hidden}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media(max-width:1400px){.hero__title{font-size:56px}}
+
+@media(max-width:1200px){
+  :root{--px:24px;--section-py:80px}
+  .hero__title{font-size:48px}
+  .section__title{font-size:40px}
+  .cta-final__title{font-size:44px}
+  .hero__inner{gap:48px}
+  .features-grid,.doctors-grid{grid-template-columns:repeat(2,1fr)}
+  #doctors .section__subtitle{white-space:normal}
+}
+
+@media(max-width:960px){
+  /* Nav: show burger, hide desktop links + CTA */
+  .nav__burger{display:flex}
+  .nav__links{display:none}
+  .nav__actions .btn{display:none}
+
+  /* Hero */
+  .hero__inner{grid-template-columns:1fr;gap:40px;align-items:flex-start}
+  .hero__visual{justify-content:center;margin-right:0}
+  .hero__mockup{max-width:460px;width:100%}
+  .section__title{font-size:36px}
+  .hero__title{font-size:44px}
+
+  /* Grids */
+  .reviews-grid{grid-template-columns:1fr;max-width:560px;margin-inline:auto}
+  .pricing-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}
+  .features__pricing-bar{flex-direction:column;align-items:flex-start;gap:20px}
+
+  /* Footer */
+  .footer__inner{flex-wrap:wrap;justify-content:center;gap:16px}
+  .footer__copy{text-align:center}
+  #doctors .section__subtitle{white-space:normal}
+}
+
+@media(max-width:640px){
+  :root{--px:20px;--section-py:56px}
+
+  /* Hero */
+  .hero{padding-block:48px 56px}
+  .hero__title{font-size:34px}
+  .hero__title-l1{white-space:normal}
+  .hero__subtitle{font-size:15px;max-width:none;margin-bottom:28px}
+  .hero__cta-wrap{margin-bottom:12px}
+  .hero__cta-wrap .btn{
+    white-space:normal;height:auto;
+    padding:14px 20px;line-height:1.4;
+    text-align:center;font-size:15px
+  }
+  .hero__store-row{gap:10px;margin-bottom:24px}
+  .store-link img{height:42px}
+  .hero__trust{gap:12px}
+  .trust-item{font-size:12px}
+
+  /* Sections */
+  .section__title{font-size:28px;margin-bottom:16px}
+  .section__subtitle{font-size:14px;margin-bottom:32px;max-width:none}
+  .section__label{font-size:13px;margin-bottom:12px}
+
+  /* Features & Doctors: 2 cols on normal phones */
+  .features-grid{grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px}
+  .feature-card{padding:20px 16px}
+  .feature-card__title{font-size:15px}
+  .doctors-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .doctor-card__info{padding:12px 14px 16px}
+  .doctor-card__name{font-size:14px}
+  .doctor-card__specialty{font-size:13px}
+
+  /* Reviews */
+  .review-card{padding:24px 20px}
+  .review-card__text{font-size:15px}
+  .reviews__rating{margin-bottom:32px}
+
+  /* Pricing */
+  .pricing-card{padding:24px 20px}
+  .price-primary{font-size:40px}
+  .pricing__toggle{width:100%;justify-content:center}
+
+  /* Features pricing bar */
+  .features__pricing-bar{padding:20px}
+  .features__pricing-bar .btn{width:100%;justify-content:center}
+
+  /* FAQ */
+  .faq-item__trigger{padding:16px 20px;font-size:15px}
+  .faq-item__body p{padding:0 20px 16px;font-size:14px}
+
+  /* CTA */
+  .cta-final{padding-block:64px}
+  .cta-final__title{font-size:30px}
+  .cta-final__subtitle{font-size:15px;margin-bottom:32px}
+  .cta-final__stores{gap:12px}
+
+  /* Footer */
+  .footer__inner{flex-direction:column;gap:12px;text-align:center}
+  .site-footer{padding-block:24px}
+}
+
+@media(max-width:420px){
+  :root{--px:16px;--section-py:48px}
+
+  .hero__title{font-size:28px}
+  .section__title{font-size:24px}
+
+  /* Single column on very small phones */
+  .features-grid,.doctors-grid{grid-template-columns:1fr}
+  .feature-card{padding:20px}
+
+  .store-link img{height:38px}
+  .cta-final__title{font-size:26px}
+  .pricing-card__name{font-size:18px}
+  .price-primary{font-size:36px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container">
+    <nav class="nav">
+      <a href="#" class="nav__logo" aria-label="Uwell — на головну">
+        <img src="assets/Logo.svg" alt="Uwell" width="82" height="32" />
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="#how-it-works">Як це працює</a></li>
+        <li><a href="#doctors">Команда лікарів</a></li>
+        <li><a href="#pricing">Тарифи</a></li>
+        <li><a href="#reviews">Відгуки</a></li>
+        <li><a href="#faq">Часті питання</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="#hero-cta" class="btn btn--primary">Спробувати безкоштовно&nbsp;→</a>
+      </div>
+      <button class="nav__burger" id="navBurger" aria-label="Відкрити меню" aria-expanded="false" aria-controls="navDrawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<nav class="nav__drawer" id="navDrawer" aria-label="Мобільне меню">
+  <div class="nav__drawer__links">
+    <a href="#how-it-works">Як це працює</a>
+    <a href="#doctors">Команда лікарів</a>
+    <a href="#pricing">Тарифи</a>
+    <a href="#reviews">Відгуки</a>
+    <a href="#faq">Часті питання</a>
+  </div>
+  <div class="nav__drawer__cta">
+    <a href="#hero-cta" class="btn btn--primary">Спробувати безкоштовно&nbsp;→</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <div class="hero__inner">
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          Перші&nbsp;3&nbsp;дні безкоштовно — без картки
+        </div>
+        <h1 class="hero__title">
+          <span class="hero__title-l1">Не разовий аналіз.</span>
+          <span class="text-teal">Система здоров'я</span>
+        </h1>
+        <p class="hero__subtitle">
+          Пройдіть обстеження — і отримайте лікаря, який пояснить результати,
+          складе план і буде поруч 24/7. Не після запису — одразу.
+          Все в одному додатку.
+        </p>
+        <div class="hero__cta-wrap" id="hero-cta">
+          <a href="#" class="btn btn--primary">
+            Завантажити додаток — 3&nbsp;дні безкоштовно&nbsp;→
+          </a>
+        </div>
+        <div class="hero__store-row">
+          <a href="#" class="store-link" aria-label="Завантажити в Google Play">
+            <img src="assets/Google Play.svg" alt="Google Play" />
+          </a>
+          <a href="#" class="store-link" aria-label="Завантажити в App Store">
+            <img src="assets/App Store.svg" alt="App Store" />
+          </a>
+        </div>
+        <div class="hero__trust">
+          <span class="trust-item"><span class="trust-check">✓</span> Персональний лікар</span>
+          <span class="trust-item"><span class="trust-check">✓</span> Організація лікування</span>
+          <span class="trust-item"><span class="trust-check">✓</span> Регулярний чекап</span>
+        </div>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <img
+          src="assets/Застосунок Uwell на смартфоні.svg"
+          alt="Застосунок Uwell на смартфоні"
+          class="hero__mockup"
+          width="580"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ЯК ЦЕ ПРАЦЮЄ -->
+<section id="how-it-works" class="section section--gray">
+  <div class="container">
+    <p class="section__label">
+      <span class="label-diamond" aria-hidden="true">◆</span> ЯК ЦЕ ПРАЦЮЄ
+    </p>
+    <h2 class="section__title">
+      Одне обстеження.<br>
+      <span class="text-teal">Система, що працює далі</span>
+    </h2>
+    <p class="section__subtitle">
+      Більшість застосунків дають лише дашборд. Uwell дає команду —
+      обстеження, лікар, AI-асистент і підтримка 24/7,
+      поєднані в одній підписці.
+    </p>
+    <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-card__header">
+          <img src="assets/Icon die.svg" alt="" width="40" height="40" aria-hidden="true" />
+          <span class="feature-card__num" aria-hidden="true">01</span>
+        </div>
+        <h3 class="feature-card__title">Медичні дані, не здогадки</h3>
+        <p class="feature-card__text">
+          Повне обстеження у CBB Lab — 40+ біомаркерів крові,
+          а не відповіді з опитувальника.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-card__header">
+          <img src="assets/Icon die-1.svg" alt="" width="40" height="40" aria-hidden="true" />
+          <span class="feature-card__num" aria-hidden="true">02</span>
+        </div>
+        <h3 class="feature-card__title">Лікар пояснює результати</h3>
+        <p class="feature-card__text">
+          Особистий лікар розбирає кожен показник
+          і складає план на найближчі місяці.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-card__header">
+          <img src="assets/Icon die-2.svg" alt="" width="40" height="40" aria-hidden="true" />
+          <span class="feature-card__num" aria-hidden="true">03</span>
+        </div>
+        <h3 class="feature-card__title">Відповіді за хвилини</h3>
+        <p class="feature-card__text">
+          AI-асистент відповідає миттєво. Лікар і підтримка 24/7&nbsp;—
+          на відстані одного повідомлення.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-card__header">
+          <img src="assets/Icon die-3.svg" alt="" width="40" height="40" aria-hidden="true" />
+          <span class="feature-card__num" aria-hidden="true">04</span>
+        </div>
+        <h3 class="feature-card__title">Контроль в одному місці</h3>
+        <p class="feature-card__text">
+          Результати, призначення і плани — в одній хронології.
+          Завжди з вами.
+        </p>
+      </article>
+    </div>
+    <div class="features__pricing-bar">
+      <p class="features__pricing-text">
+        <strong>Від $15/міс.</strong> Одна підписка включає обстеження, команду лікарів і всі інструменти.
+        <span class="pricing-note">Перші&nbsp;3&nbsp;дні — безкоштовно, картку списують лише з&nbsp;4-го дня.</span>
+      </p>
+      <a href="#" class="btn btn--primary">Спробувати в додатку&nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- КОМАНДА ЛІКАРІВ -->
+<section id="doctors" class="section">
+  <div class="container">
+    <p class="section__label">
+      <span class="label-diamond" aria-hidden="true">◆</span> КОМАНДА ЛІКАРІВ
+    </p>
+    <h2 class="section__title">
+      Ваш лікар — завжди поруч, а не тільки на прийомі
+    </h2>
+    <p class="section__subtitle">Підтримка лікаря 24/7&nbsp;— не після запису, а одразу. Середній час відповіді&nbsp;— 8&nbsp;хвилин.</p>
+    <div class="doctors-grid">
+      <article class="doctor-card">
+        <div class="doctor-card__photo">
+          <img src="assets/Doctor 1.svg" alt="Анна Величко — Терапевт" />
+        </div>
+        <div class="doctor-card__info">
+          <h3 class="doctor-card__name">Анна Величко</h3>
+          <p class="doctor-card__specialty">Терапевт</p>
+          <p class="doctor-card__exp">12 років практики</p>
+        </div>
+      </article>
+      <article class="doctor-card">
+        <div class="doctor-card__photo">
+          <img src="assets/Doctor 2.svg.svg" alt="Роман Ткаченко — Кардіолог" />
+        </div>
+        <div class="doctor-card__info">
+          <h3 class="doctor-card__name">Роман Ткаченко</h3>
+          <p class="doctor-card__specialty">Кардіолог</p>
+          <p class="doctor-card__exp">9 років практики</p>
+        </div>
+      </article>
+      <article class="doctor-card">
+        <div class="doctor-card__photo">
+          <img src="assets/Doctor 3 svg.svg" alt="Ірина Поліщук — Ендокринолог"
+               style="object-position:top center" />
+        </div>
+        <div class="doctor-card__info">
+          <h3 class="doctor-card__name">Ірина Поліщук</h3>
+          <p class="doctor-card__specialty">Ендокринолог</p>
+          <p class="doctor-card__exp">14 років практики</p>
+        </div>
+      </article>
+      <article class="doctor-card">
+        <div class="doctor-card__photo">
+          <img src="assets/Doctor 4.svg.svg" alt="Марія Висоцька — Гастроентеролог"
+               style="object-position: center 35%" />
+        </div>
+        <div class="doctor-card__info">
+          <h3 class="doctor-card__name">Марія Висоцька</h3>
+          <p class="doctor-card__specialty">Гастроентеролог</p>
+          <p class="doctor-card__exp">11 років практики</p>
+        </div>
+      </article>
+    </div>
+    <div class="carousel-dots" aria-hidden="true">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot dot--active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ВІДГУКИ -->
+<section id="reviews" class="section section--gray">
+  <div class="container">
+    <p class="section__label">
+      <span class="label-diamond" aria-hidden="true">◆</span> ВІДГУКИ
+    </p>
+    <h2 class="section__title">Що кажуть користувачі Uwell</h2>
+    <div class="reviews__rating" aria-label="Рейтинг 4.8 зірки, понад 1200 оцінок">
+      <span class="rating__stars" aria-hidden="true">★★★★★</span>
+      <span class="rating__score">4.8</span>
+      <span class="rating__count">· 1&nbsp;200+ оцінок в App Store</span>
+    </div>
+    <div class="reviews-grid">
+      <article class="review-card">
+        <img src="assets/Quote Icon.svg" alt="" class="review-card__quote" width="32" height="32" aria-hidden="true" />
+        <p class="review-card__text">
+          Нарешті зрозуміла чому постійно втомлена. Виявили дефіцит D3
+          і феритину, яких не помічала 3&nbsp;роки. Лікар склала план —
+          вже через місяць відчула різницю.
+        </p>
+        <div class="review-card__author">
+          <img src="assets/Avatar.svg" alt="" class="review-card__avatar" width="40" height="40" aria-hidden="true" />
+          <div>
+            <div class="review-card__name-row">
+              <p class="review-card__name">Олена Коваль</p>
+              <span class="review-card__stars" aria-label="5 зірок">★★★★★</span>
+            </div>
+            <p class="review-card__location">Київ · 34 роки</p>
+          </div>
+        </div>
+      </article>
+      <article class="review-card">
+        <img src="assets/Quote Icon.svg" alt="" class="review-card__quote" width="32" height="32" aria-hidden="true" />
+        <p class="review-card__text">
+          Зручно що лікар завжди на зв'язку. Написав о 22:00 з питанням
+          щодо тиску — отримав відповідь за 10&nbsp;хвилин.
+          Жодна поліклініка так не дасть.
+        </p>
+        <div class="review-card__author">
+          <img src="assets/Avatar-1.svg" alt="" class="review-card__avatar" width="40" height="40" aria-hidden="true" />
+          <div>
+            <div class="review-card__name-row">
+              <p class="review-card__name">Михайло Діченко</p>
+              <span class="review-card__stars" aria-label="5 зірок">★★★★★</span>
+            </div>
+            <p class="review-card__location">Харків · 41 рік</p>
+          </div>
+        </div>
+      </article>
+      <article class="review-card">
+        <img src="assets/Quote Icon.svg" alt="" class="review-card__quote" width="32" height="32" aria-hidden="true" />
+        <p class="review-card__text">
+          Завантажила додаток — і вперше маю всі аналізи, призначення
+          і план в одному місці. Лікар відповідає прямо в чаті.
+          Це те, чого не вистачало роками.
+        </p>
+        <div class="review-card__author">
+          <img src="assets/Avatar-2.svg" alt="" class="review-card__avatar" width="40" height="40" aria-hidden="true" />
+          <div>
+            <div class="review-card__name-row">
+              <p class="review-card__name">Тетяна Савченко</p>
+              <span class="review-card__stars" aria-label="5 зірок">★★★★★</span>
+            </div>
+            <p class="review-card__location">Львів · 28 років</p>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="carousel-dots" aria-hidden="true">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot dot--active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ТАРИФИ -->
+<section id="pricing" class="section">
+  <div class="container">
+    <div class="pricing__header">
+      <p class="section__label">
+        <span class="label-diamond" aria-hidden="true">◆</span> ТАРИФИ
+      </p>
+      <h2 class="section__title">Оберіть свій тарифний план</h2>
+      <p class="section__subtitle">
+        Перші&nbsp;3&nbsp;дні безкоштовно для будь-якого тарифу. Без картки.
+        <span class="pricing__app-note">
+          Підписка на мобільний додаток Uwell — встановіть і почніть за 2&nbsp;хвилини.
+        </span>
+      </p>
+    </div>
+    <div class="pricing__toggle" role="group" aria-label="Оберіть період оплати">
+      <button class="toggle-btn toggle-btn--active" data-period="quarterly">Квартальна</button>
+      <button class="toggle-btn" data-period="annual">
+        Річна <span class="discount-badge">-20%</span>
+      </button>
+    </div>
+    <div class="pricing-grid">
+      <article class="pricing-card">
+        <h3 class="pricing-card__name">Турбота про себе</h3>
+        <p class="pricing-card__desc">Персональна медична підтримка</p>
+        <div class="pricing-card__price">
+          <span class="price-primary">$15<span class="price-unit">/міс</span></span>
+          <span class="price-secondary">$45 за квартал, списується одразу</span>
+        </div>
+        <ul class="pricing-card__features">
+          <li>Безлімітний ШІ-асистент Wella</li>
+          <li>Персональний лікар без обмежень</li>
+          <li>Електронні рецепти та направлення</li>
+          <li>Організація лікування 24/7</li>
+          <li>Супровід під час лікування</li>
+          <li>Знижки до 30% у клініках</li>
+        </ul>
+        <a href="#" class="btn btn--outline btn--block">Почати безкоштовно&nbsp;→</a>
+      </article>
+      <article class="pricing-card pricing-card--popular">
+        <span class="pricing-card__popular-badge">Найпопулярніший</span>
+        <h3 class="pricing-card__name">Щаслива сім'я</h3>
+        <p class="pricing-card__desc">Для всіх членів родини з лікарем</p>
+        <div class="pricing-card__price">
+          <span class="price-primary">$25<span class="price-unit">/міс</span></span>
+          <span class="price-secondary">$75 за квартал, списується одразу</span>
+        </div>
+        <ul class="pricing-card__features">
+          <li>Безлімітний ШІ-асистент Wella</li>
+          <li>Персональний лікар без обмежень</li>
+          <li>Електронні рецепти та направлення</li>
+          <li>Організація лікування 24/7</li>
+          <li>Знижки до 30% у клініках</li>
+          <li>Підбір лікарів для дітей</li>
+          <li>Медична картка для всіх членів сім'ї</li>
+        </ul>
+        <a href="#" class="btn btn--primary btn--block">Вибрати для сім'ї&nbsp;→</a>
+      </article>
+      <article class="pricing-card">
+        <h3 class="pricing-card__name">Подарунок близьким</h3>
+        <p class="pricing-card__desc">Медична підписка у подарунок</p>
+        <div class="pricing-card__price">
+          <span class="price-primary">$15<span class="price-unit">/міс</span></span>
+          <span class="price-secondary">$45 за квартал, списується одразу</span>
+        </div>
+        <ul class="pricing-card__features">
+          <li>Безлімітний ШІ-асистент Wella</li>
+          <li>Персональний лікар без обмежень</li>
+          <li>Електронні рецепти та направлення</li>
+          <li>Організація лікування 24/7</li>
+          <li>Супровід під час лікування</li>
+          <li>Знижки до 30% у клініках</li>
+          <li>Оформлюється як подарунковий сертифікат</li>
+        </ul>
+        <a href="#" class="btn btn--outline btn--block">Подарувати підписку&nbsp;→</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ЧАСТІ ПИТАННЯ -->
+<section id="faq" class="section section--gray">
+  <div class="container">
+    <p class="section__label">
+      <span class="label-diamond" aria-hidden="true">◆</span> ЧАСТІ ПИТАННЯ
+    </p>
+    <h2 class="section__title">Часті запитання</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-1">
+          Чи потрібна картка для безкоштовного тріалу?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-1" class="faq-item__body" hidden>
+          <p>Ні. Перші&nbsp;3&nbsp;дні — абсолютно безкоштовно і без будь-яких платіжних даних. Картку запитуємо лише з&nbsp;4-го дня, якщо ви вирішите продовжити підписку.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-2">
+          Як встановити додаток і почати?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-2" class="faq-item__body" hidden>
+          <p>Завантажте Uwell у App Store або Google Play, зареєструйтесь — і одразу отримаєте доступ до лікаря та AI-асистента. Весь процес займає менше 2&nbsp;хвилин.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-3">
+          Чи замінює Uwell мого лікаря?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-3" class="faq-item__body" hidden>
+          <p>Uwell — це доповнення, а не заміна. Ваш лікар у додатку — живий фахівець, який відповідає на питання і допомагає організувати лікування. Для термінових ситуацій — завжди звертайтесь до офлайн-клініки.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-4">
+          Де проходити чекап?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-4" class="faq-item__body" hidden>
+          <p>Обстеження проводиться у партнерській лабораторії CBB Lab. Ми надамо направлення прямо в додатку — вам залишиться обрати зручний час і локацію.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-5">
+          Чи буде у мене той самий лікар завжди?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-5" class="faq-item__body" hidden>
+          <p>Так. Персональний лікар закріплюється за вами на весь час підписки. Він знає вашу історію, результати аналізів і поточний план лікування.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-6">
+          Як скасувати підписку?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-6" class="faq-item__body" hidden>
+          <p>Скасувати підписку можна в будь-який момент прямо в додатку: Профіль → Підписка. Без прихованих умов і штрафів.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-item__trigger" aria-expanded="false" aria-controls="faq-7">
+          Мої медичні дані в безпеці?
+          <span class="faq-item__icon" aria-hidden="true">+</span>
+        </button>
+        <div id="faq-7" class="faq-item__body" hidden>
+          <p>Так. Всі медичні дані шифруються і зберігаються відповідно до стандартів GDPR. Ми ніколи не передаємо ваші дані третім особам.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ФІНАЛЬНИЙ CTA -->
+<section class="cta-final">
+  <div class="container">
+    <div class="cta-final__inner">
+      <p class="cta-final__social-proof">Вже 14&nbsp;000+ людей ведуть своє здоров'я в Uwell</p>
+      <h2 class="cta-final__title">
+        Почніть безкоштовно.<br>Вже сьогодні
+      </h2>
+      <p class="cta-final__subtitle">Перші&nbsp;3&nbsp;дні безкоштовно для будь-якого тарифу. Без картки</p>
+      <div class="cta-final__stores">
+        <a href="#" class="store-link" aria-label="Завантажити в Google Play">
+          <img src="assets/Google Play.svg" alt="Google Play" />
+        </a>
+        <a href="#" class="store-link" aria-label="Завантажити в App Store">
+          <img src="assets/App Store.svg" alt="App Store" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__inner">
+      <a href="#" aria-label="Uwell — на головну">
+        <img src="assets/Logo.svg" alt="Uwell" width="82" height="32" />
+      </a>
+      <p class="footer__copy">
+        © 2025 Uwell Health, Inc. — Не замінює невідкладну медичну допомогу.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Hamburger menu
+  var burger  = document.getElementById('navBurger');
+  var drawer  = document.getElementById('navDrawer');
+
+  function closeMenu() {
+    burger.classList.remove('nav__burger--open');
+    drawer.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+
+  burger.addEventListener('click', function() {
+    var isOpen = drawer.classList.contains('is-open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      burger.classList.add('nav__burger--open');
+      drawer.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
+    }
+  });
+
+  // Close drawer on link click
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item__trigger').forEach(function(trigger) {
+    trigger.addEventListener('click', function() {
+      var isOpen  = this.getAttribute('aria-expanded') === 'true';
+      var bodyId  = this.getAttribute('aria-controls');
+      var body    = document.getElementById(bodyId);
+      var icon    = this.querySelector('.faq-item__icon');
+      document.querySelectorAll('.faq-item__trigger').forEach(function(t) {
+        t.setAttribute('aria-expanded', 'false');
+        t.querySelector('.faq-item__icon').textContent = '+';
+      });
+      document.querySelectorAll('.faq-item__body').forEach(function(b) { b.hidden = true; });
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('faq-item--open'); });
+      if (!isOpen) {
+        this.setAttribute('aria-expanded', 'true');
+        icon.textContent = '×';
+        body.hidden = false;
+        this.closest('.faq-item').classList.add('faq-item--open');
+      }
+    });
+  });
+  document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.toggle-btn').forEach(function(b) {
+        b.classList.remove('toggle-btn--active');
+      });
+      this.classList.add('toggle-btn--active');
+    });
+  });
+</script>
+
+</body>
+</html>
